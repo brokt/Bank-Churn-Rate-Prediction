@@ -45,24 +45,24 @@ from keras.layers import Dropout
 classifier = Sequential()
 
 # adding the input layer and first hidden layer with dropout
-classifier.add(Dense(output_dim=18,input_dim=12,kernel_initializer = 'uniform',activation = 'relu'))
+classifier.add(Dense(output_dim=64,input_dim=12,kernel_initializer = 'uniform',activation = 'relu'))
 classifier.add(Dropout(p = 0.1))
-classifier.add(Dense(output_dim=20,input_dim=18,kernel_initializer = 'uniform',activation = 'relu'))
+classifier.add(Dense(output_dim=128,input_dim=64,kernel_initializer = 'uniform',activation = 'relu'))
 classifier.add(Dropout(p = 0.2))
-classifier.add(Dense(output_dim=12,input_dim=20,kernel_initializer = 'uniform',activation = 'relu'))
+classifier.add(Dense(output_dim=256,input_dim=128,kernel_initializer = 'uniform',activation = 'relu'))
 classifier.add(Dropout(p = 0.3))
-classifier.add(Dense(output_dim=6,input_dim=12, kernel_initializer = 'uniform',activation = 'relu'))
-classifier.add(Dropout(p = 0.1))
+classifier.add(Dense(output_dim=64,input_dim=256, kernel_initializer = 'uniform',activation = 'relu'))
+classifier.add(Dropout(p = 0.4))
 
 #adding output layer
-classifier.add(Dense(output_dim=1, input_dim=6,kernel_initializer = 'uniform',activation = 'sigmoid'))
+classifier.add(Dense(output_dim=1, input_dim=64,kernel_initializer = 'uniform',activation = 'sigmoid'))
 
 #compiling the ANN
 classifier.compile(optimizer = 'adam',loss = 'binary_crossentropy',metrics = ['accuracy'])
 
 # Training the ANN
-classifier.fit(X_train,y_train,batch_size = 10,epochs = 100)
-
+classifier.fit(X_train,y_train,batch_size = 512,epochs = 100)
+classifier.save('model.h5')
 
 def predict():
     print("Enter country - 'spain','france' or 'germany'")

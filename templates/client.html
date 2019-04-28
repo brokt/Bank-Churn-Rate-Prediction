@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"
+        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+        crossorigin="anonymous"></script>
+
+    <form action="http://127.0.0.1:5000/predict" id="predict" method="POST">
+        <label>Country: <input type="text" name = "country"></label><br>
+        <label>Score: <input type="text" name = "score"></label><br>
+        <label>Gender (0 for female and 1 for male): <input type="text" name = "g"></label><br>
+        <label>Age: <input type="text" name = "age"></label><br>
+        <label>Tenure: <input type="text" name = "tenure"></label><br>
+        <label>Balance: <input type="text" name = "balance"></label><br>
+        <label>Number of Products: <input type="text" name = "numprods"></label><br>
+        <label>Has Credit Card(1 for yes and 0 for no): <input type="text" name = "hascrd"></label><br>
+        <label>Is the customer an active member (1 for yes and 0 for no): <input type="text" name = "isactive"></label><br>
+        <label>Salary: <input type="text" name = "salary"></label><br>
+
+        <button type="button" >Click Me!</button>
+    </form>
+
+    <p id='Message'></p>
+    <script>
+        $(function() {
+            $('button').click(function() {
+                $.ajax({
+                    url: '/predict',
+                    data: $('form').serialize(),
+                    type: 'POST',
+                    success: function(response) {
+                        console.log(response);
+                        if (response.result === 'yes'){
+                            $("#Message").text("This customer is highly likely to leave the bank")
+                        }
+                        else{
+                            $("#Message").text("This customer is not likely to leave the bank")
+ 
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
